@@ -1,0 +1,82 @@
+/* 隐藏助手容器样式 */
+.hide-helper-container {
+    width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 内容区域 */
+.hide-helper-section {
+    padding: 10px;
+}
+
+/* 输入行样式 */
+.hide-helper-input-row {
+    display: flex;
+    margin: 10px 0;
+    gap: 8px;
+}
+
+/* 按钮行样式 */
+.hide-helper-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin: 12px 0;
+    gap: 8px;
+}
+
+/* 当前设置显示 */
+.hide-helper-current {
+    margin: 10px 0;
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+/* 输入框样式 */
+#hide-last-n {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(30, 33, 40, 0.7);
+    color: var(--SmartThemeBodyColor);
+    font-size: 14px;
+}
+
+/* 按钮样式 */
+.hide-helper-btn {
+    padding: 8px 14px;
+    border-radius: 4px;
+    border: none;
+    background-color: #4a4d57;
+    color: var(--SmartThemeBodyColor);
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.hide-helper-btn:hover {
+    background-color: #5a5d67;
+}
+
+.hide-helper-btn.success {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.hide-helper-btn.success:hover {
+    background-color: #45a049;
+}
+
+/* 标签样式 */
+.hide-helper-section label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: var(--SmartThemeBodyColor);
+}
+
+/* 隐藏的消息样式增强 */
+.mes[is_visible="false"] {
+    opacity: 0.5; /* 使隐藏消息稍微更易于区分 */
+}
