@@ -1,7 +1,6 @@
 import { extension_settings, loadExtensionSettings } from "../../../extensions.js";
 import { saveSettingsDebounced, eventSource, event_types } from "../../../../script.js";
 import { getContext } from "../../../extensions.js";
-// 不再使用 hideChatMessageRange，而是直接修改 is_system 属性
 // import { hideChatMessageRange } from "../../../chats.js";
 
 const extensionName = "hide-helper";
@@ -147,8 +146,8 @@ function runIncrementalHideCheck() {
 
         // --- 收集需要隐藏的消息 ---
         for (let i = startIndex; i < endIndex; i++) {
-            // 确保消息存在，当前是可见的，且不是用户消息 (通常不隐藏用户消息)
-            if (chat[i] && chat[i].is_system === false && !chat[i].is_user) {
+            // 移除 !chat[i].is_user 条件，允许隐藏用户消息
+            if (chat[i] && chat[i].is_system === false) {
                 toHideIncrementally.push(i);
             }
         }
@@ -207,7 +206,7 @@ function runFullHideCheck() {
 
     // 1. 优化初始检查 (N=0 或 N >= length -> 全部可见)
     if (hideLastN <= 0 || hideLastN >= currentChatLength) {
-        const needsToShowAny = chat.some(msg => msg && msg.is_system === true && !msg.is_user);
+        const needsToShowAny = chat.some(msg => msg && msg.is_system === true);
         if (!needsToShowAny) {
             console.log(`[${extensionName}] Full check (N=${hideLastN}): No messages are hidden or all should be visible, skipping.`);
             settings.lastProcessedLength = currentChatLength; // 即使跳过也要更新长度
@@ -231,7 +230,8 @@ function runFullHideCheck() {
         if (!msg) continue;
         const isCurrentlyHidden = msg.is_system === true;
 
-        if (!isCurrentlyHidden && !msg.is_user) {
+        // 移除 !msg.is_user 条件，允许隐藏用户消息
+        if (!isCurrentlyHidden) {
             toHide.push(i);
         } else if (isCurrentlyHidden) {
             // 跳跃扫描逻辑
@@ -255,7 +255,8 @@ function runFullHideCheck() {
         if (!msg) continue;
         const isCurrentlyHidden = msg.is_system === true;
 
-        if (isCurrentlyHidden && !msg.is_user) {
+        // 移除 !msg.is_user 条件，允许显示用户消息
+        if (isCurrentlyHidden) {
             toShow.push(i);
         } else if (!isCurrentlyHidden) {
             // 跳跃扫描逻辑 (检查 is_system === false)
